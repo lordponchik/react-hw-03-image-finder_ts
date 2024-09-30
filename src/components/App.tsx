@@ -7,7 +7,7 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import getImages from '../services/PixabauAPI';
 
 interface State {
-  images: {};
+  images: {}[];
   query: string;
 }
 
@@ -17,11 +17,19 @@ class App extends Component<{}, State> {
     query: '',
   };
 
-  componentDidUpdate(prevState: State): void {
+  async componentDidUpdate(_: any, prevState: State) {
     if (this.state.query.length !== 0 && prevState.query !== this.state.query) {
-      getImages(this.state.query);
+      this.sendingRequest();
     }
   }
+
+  sendingRequest = async () => {
+    const images = await getImages(this.state.query);
+
+    this.setState(prevState => {
+      return { images: [...prevState.images, ...images] };
+    });
+  };
 
   qetQuery = (valueInput: string) => {
     this.setState({ query: valueInput });
