@@ -1,10 +1,14 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 
 interface State {
   valueInput: string;
 }
 
-class Searchbar extends Component<{}, State> {
+interface Props {
+  onSubmit: (valueInput: string) => void;
+}
+
+class Searchbar extends Component<Props, State> {
   state = {
     valueInput: '',
   };
@@ -15,12 +19,18 @@ class Searchbar extends Component<{}, State> {
     this.setState({ valueInput: value });
   };
 
+  onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    this.props.onSubmit(this.state.valueInput);
+  };
+
   render() {
     const { valueInput } = this.state;
 
     return (
       <header className="searchbar">
-        <form className="form">
+        <form className="form" onSubmit={this.onSubmit}>
           <button type="submit" className="button">
             <span className="button-label">Search</span>
           </button>
