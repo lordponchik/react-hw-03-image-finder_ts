@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import './App.css';
+import IImage from '../interfaces/Image.inteface';
 
 import Searchbar from '../components/Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
@@ -7,7 +8,7 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import getImages from '../services/PixabauAPI';
 
 interface State {
-  images: {}[];
+  images: IImage[];
   query: string;
 }
 
@@ -27,7 +28,9 @@ class App extends Component<{}, State> {
     const images = await getImages(this.state.query);
 
     this.setState(prevState => {
-      return { images: [...prevState.images, ...images] };
+      return {
+        images: [...prevState.images, ...images],
+      };
     });
   };
 
@@ -39,7 +42,7 @@ class App extends Component<{}, State> {
     return (
       <div className="App">
         <Searchbar onSubmit={this.qetQuery} />
-        <ImageGallery />
+        <ImageGallery images={this.state.images} />
       </div>
     );
   }
