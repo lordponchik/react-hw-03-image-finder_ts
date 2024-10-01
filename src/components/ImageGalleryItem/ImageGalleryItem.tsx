@@ -1,11 +1,9 @@
 import IImage from '../../interfaces/Image.inteface';
-// interface Props {
-//   image: IImage;
-// }
+import style from './ImageGalleryItem.module.css';
 
 const ImageGalleryItem = ({ id, webformatURL, largeformatURL }: IImage) => {
   return (
-    <li className="gallery-item">
+    <li className={style.galleryItem}>
       <img src={webformatURL} alt="" />
     </li>
   );

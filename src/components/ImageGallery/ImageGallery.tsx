@@ -1,5 +1,5 @@
 import IImage from '../../interfaces/Image.inteface';
-
+import style from './ImageGallery.module.css';
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 
 const ImageGallery = ({ images }: Props) => {
   return (
-    <ul className="gallery">
+    <ul className={style.gallery}>
       {images.map((image: IImage) => {
         return <ImageGalleryItem key={image.id} {...image} />;
       })}
