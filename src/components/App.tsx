@@ -35,7 +35,15 @@ class App extends Component<{}, State> {
   };
 
   qetQuery = (valueInput: string) => {
-    this.setState({ query: valueInput });
+    if (this.state.query === valueInput) {
+      alert(`${valueInput} found`);
+      return;
+    }
+
+    this.setState({
+      images: [],
+      query: valueInput,
+    });
   };
 
   render() {
