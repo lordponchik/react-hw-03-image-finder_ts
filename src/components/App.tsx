@@ -6,26 +6,32 @@ import Searchbar from '../components/Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 
 import getImages from '../services/PixabauAPI';
+import LoadMore from './LoadMore/LoadMore';
 
 interface State {
   images: IImage[];
   query: string;
+  page: number;
 }
 
 class App extends Component<{}, State> {
   state = {
     images: [],
     query: '',
+    page: 1,
   };
 
   async componentDidUpdate(_: any, prevState: State) {
-    if (this.state.query.length !== 0 && prevState.query !== this.state.query) {
+    if (
+      (this.state.query.length !== 0 && prevState.query !== this.state.query) ||
+      (this.state.page !== prevState.page && this.state.query !== '')
+    ) {
       this.sendingRequest();
     }
   }
 
   sendingRequest = async () => {
-    const images = await getImages(this.state.query);
+    const images = await getImages(this.state.query, this.state.page);
 
     this.setState(prevState => {
       return {
@@ -43,6 +49,13 @@ class App extends Component<{}, State> {
     this.setState({
       images: [],
       query: valueInput,
+      page: 1,
+    });
+  };
+
+  nextPage = () => {
+    this.setState(prevState => {
+      return { page: prevState.page + 1 };
     });
   };
 
@@ -51,6 +64,7 @@ class App extends Component<{}, State> {
       <div className="App">
         <Searchbar onSubmit={this.qetQuery} />
         <ImageGallery images={this.state.images} />
+        <LoadMore nextPage={this.nextPage} />
       </div>
     );
   }
