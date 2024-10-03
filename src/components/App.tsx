@@ -64,7 +64,7 @@ class App extends Component<{}, State> {
       <div className="App">
         <Searchbar onSubmit={this.qetQuery} />
         <ImageGallery images={this.state.images} />
-        <LoadMore nextPage={this.nextPage} />
+        {this.state.images.length > 0 && <LoadMore nextPage={this.nextPage} />}
       </div>
     );
   }
