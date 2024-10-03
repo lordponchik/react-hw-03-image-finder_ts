@@ -4,7 +4,7 @@ import IImage from '../interfaces/Image.inteface';
 
 import Searchbar from '../components/Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
-
+import Loader from './Loader/Loader';
 import getImages from '../services/PixabauAPI';
 import LoadMore from './LoadMore/LoadMore';
 
@@ -12,6 +12,7 @@ interface State {
   images: IImage[];
   query: string;
   page: number;
+  isLoading: boolean;
 }
 
 class App extends Component<{}, State> {
@@ -19,6 +20,7 @@ class App extends Component<{}, State> {
     images: [],
     query: '',
     page: 1,
+    isLoading: false,
   };
 
   async componentDidUpdate(_: any, prevState: State) {
@@ -31,13 +33,21 @@ class App extends Component<{}, State> {
   }
 
   sendingRequest = async () => {
-    const images = await getImages(this.state.query, this.state.page);
+    this.setState({ isLoading: true });
 
-    this.setState(prevState => {
-      return {
-        images: [...prevState.images, ...images],
-      };
-    });
+    try {
+      const images = await getImages(this.state.query, this.state.page);
+
+      this.setState(prevState => {
+        return {
+          images: [...prevState.images, ...images],
+          isLoading: true,
+        };
+      });
+    } catch (error) {
+    } finally {
+      this.setState({ isLoading: false });
+    }
   };
 
   qetQuery = (valueInput: string) => {
@@ -64,6 +74,7 @@ class App extends Component<{}, State> {
       <div className="App">
         <Searchbar onSubmit={this.qetQuery} />
         <ImageGallery images={this.state.images} />
+        {this.state.isLoading && <Loader />}
         {this.state.images.length > 0 && <LoadMore nextPage={this.nextPage} />}
       </div>
     );
