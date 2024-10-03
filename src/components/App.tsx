@@ -51,6 +51,11 @@ class App extends Component<{}, State> {
   };
 
   qetQuery = (valueInput: string) => {
+    if (valueInput === '') {
+      alert(`Can't find "Nothing"`);
+      return;
+    }
+
     if (this.state.query === valueInput) {
       alert(`${valueInput} found`);
       return;
