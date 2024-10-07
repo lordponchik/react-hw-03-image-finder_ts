@@ -4,13 +4,14 @@ import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 
 interface Props {
   images: IImage[];
+  isOpenModal: (modalData: string) => void;
 }
 
-const ImageGallery = ({ images }: Props) => {
+const ImageGallery = ({ images, isOpenModal }: Props) => {
   return (
     <ul className={style.gallery}>
       {images.map((image: IImage) => {
-        return <ImageGalleryItem key={image.id} {...image} />;
+        return <ImageGalleryItem key={image.id} image={image} isOpenModal={isOpenModal} />;
       })}
     </ul>
   );

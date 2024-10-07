@@ -1,9 +1,20 @@
 import IImage from '../../interfaces/Image.inteface';
 import style from './ImageGalleryItem.module.css';
 
-const ImageGalleryItem = ({ id, webformatURL, largeformatURL }: IImage) => {
+interface Props {
+  image: IImage;
+  isOpenModal: (modalData: string) => void;
+}
+
+const ImageGalleryItem = ({ image: { id, webformatURL, largeImageURL }, isOpenModal }: Props) => {
   return (
-    <li className={style.galleryItem}>
+    <li
+      className={style.galleryItem}
+      onClick={() => {
+        console.log(webformatURL);
+        isOpenModal(largeImageURL);
+      }}
+    >
       <img src={webformatURL} alt="" />
     </li>
   );
