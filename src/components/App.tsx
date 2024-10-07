@@ -7,12 +7,16 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import Loader from './Loader/Loader';
 import getImages from '../services/PixabauAPI';
 import LoadMore from './LoadMore/LoadMore';
+import Modal from './Modal/Modal';
+import ImageModal from './ImageModal/ImageModal';
 
 interface State {
   images: IImage[];
   query: string;
   page: number;
   isLoading: boolean;
+  isOpenModal: boolean;
+  modalImageData: null | string;
 }
 
 class App extends Component<{}, State> {
@@ -21,6 +25,8 @@ class App extends Component<{}, State> {
     query: '',
     page: 1,
     isLoading: false,
+    isOpenModal: false,
+    modalImageData: '',
   };
 
   async componentDidUpdate(_: any, prevState: State) {
@@ -74,13 +80,26 @@ class App extends Component<{}, State> {
     });
   };
 
+  handleToggleModal = (modalData: string) => {
+    this.setState(({ isOpenModal }) => {
+      return { isOpenModal: !isOpenModal, modalImageData: modalData };
+    });
+  };
+
   render() {
     return (
       <div className="App">
         <Searchbar onSubmit={this.qetQuery} />
-        <ImageGallery images={this.state.images} />
+        <ImageGallery images={this.state.images} isOpenModal={this.handleToggleModal} />
         {this.state.isLoading && <Loader />}
         {this.state.images.length > 0 && <LoadMore nextPage={this.nextPage} />}
+
+        {this.state.isOpenModal && (
+          <Modal closeModal={this.handleToggleModal}>
+            <ImageModal imageData={this.state.modalImageData} />
+            {/* <img src={this.state.modalImageData} alt="" /> */}
+          </Modal>
+        )}
       </div>
     );
   }
