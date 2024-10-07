@@ -1,23 +1,32 @@
 import { Component, ReactNode } from 'react';
 import { createPortal } from 'react-dom';
+import style from './Modal.module.css';
 
 const modalRoot: any = document.querySelector('#modal-root');
 
-class Modal extends Component {
-  //   onClickToggle = () => {
+interface Props {
+  closeModal: (modalData: string) => void;
+  children?: React.ReactElement;
+}
 
-  //   };
-
-  componentDidMount() {}
-
+class Modal extends Component<Props, {}> {
   render() {
     return createPortal(
-      <div>
-        <div>
-          <img src="" alt="" />
+      <div className={style.backdrop}>
+        <div className={style.modal}>
+          <button
+            type="button"
+            onClick={() => this.props.closeModal('')}
+            className={style.closeBtn}
+          >
+            X
+          </button>
+          {this.props.children}
         </div>
       </div>,
       modalRoot
     );
   }
 }
+
+export default Modal;
