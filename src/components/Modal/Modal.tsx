@@ -5,7 +5,7 @@ import style from './Modal.module.css';
 const modalRoot: any = document.querySelector('#modal-root');
 
 interface Props {
-  closeModal: (modalData: string) => void;
+  closeModal: (modalData?: string) => void;
   children?: React.ReactElement;
 }
 
@@ -20,13 +20,13 @@ class Modal extends Component<Props, {}> {
   handleKeyDown = (e: KeyboardEvent) => {
     console.log(typeof e);
     if (e.code === 'Escape') {
-      this.props.closeModal('');
+      this.props.closeModal();
     }
   };
 
   handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.currentTarget === e.target) {
-      this.props.closeModal('');
+      this.props.closeModal();
     }
   };
 

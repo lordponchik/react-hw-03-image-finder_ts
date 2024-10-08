@@ -11,7 +11,6 @@ const ImageGalleryItem = ({ image: { id, webformatURL, largeImageURL }, isOpenMo
     <li
       className={style.galleryItem}
       onClick={() => {
-        console.log(webformatURL);
         isOpenModal(largeImageURL);
       }}
     >

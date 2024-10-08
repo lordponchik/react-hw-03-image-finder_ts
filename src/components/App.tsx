@@ -80,7 +80,7 @@ class App extends Component<{}, State> {
     });
   };
 
-  handleToggleModal = (modalData: string) => {
+  handleToggleModal = (modalData: string = '') => {
     this.setState(({ isOpenModal }) => {
       return { isOpenModal: !isOpenModal, modalImageData: modalData };
     });
@@ -97,7 +97,6 @@ class App extends Component<{}, State> {
         {this.state.isOpenModal && (
           <Modal closeModal={this.handleToggleModal}>
             <ImageModal imageData={this.state.modalImageData} />
-            {/* <img src={this.state.modalImageData} alt="" /> */}
           </Modal>
         )}
       </div>
