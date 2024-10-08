@@ -18,7 +18,6 @@ class Modal extends Component<Props, {}> {
   }
 
   handleKeyDown = (e: KeyboardEvent) => {
-    console.log(typeof e);
     if (e.code === 'Escape') {
       this.props.closeModal();
     }
