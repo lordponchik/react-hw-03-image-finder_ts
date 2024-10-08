@@ -16,7 +16,7 @@ class ImageGallery extends Component<Props, State> {
   getSnapshotBeforeUpdate(prevProps: Props, prevState: State): number | null {
     const list = this.listRef.current;
     if (list) {
-      return list.scrollHeight;
+      return list.scrollHeight - list.scrollTop;
     }
     return null;
   }
