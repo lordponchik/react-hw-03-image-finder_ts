@@ -10,9 +10,28 @@ interface Props {
 }
 
 class Modal extends Component<Props, {}> {
+  componentDidMount(): void {
+    window.addEventListener('keydown', this.handleKeyDown);
+  }
+  componentWillUnmount(): void {
+    window.removeEventListener('keydown', this.handleKeyDown);
+  }
+
+  handleKeyDown = (e: any) => {
+    if (e.code === 'Escape') {
+      this.props.closeModal('');
+    }
+  };
+
+  handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.currentTarget === e.target) {
+      this.props.closeModal('');
+    }
+  };
+
   render() {
     return createPortal(
-      <div className={style.backdrop}>
+      <div className={style.backdrop} onClick={this.handleBackdropClick}>
         <div className={style.modal}>
           <button
             type="button"
