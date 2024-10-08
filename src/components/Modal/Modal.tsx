@@ -1,8 +1,8 @@
-import { Component, ReactNode } from 'react';
+import { Component } from 'react';
 import { createPortal } from 'react-dom';
 import style from './Modal.module.css';
 
-const modalRoot: any = document.querySelector('#modal-root');
+const modalRoot: HTMLDivElement | null = document.querySelector('#modal-root');
 
 interface Props {
   closeModal: (modalData?: string) => void;
@@ -43,7 +43,7 @@ class Modal extends Component<Props, {}> {
           {this.props.children}
         </div>
       </div>,
-      modalRoot
+      modalRoot!
     );
   }
 }
