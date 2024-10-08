@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import style from './Searchbar.module.css';
 
 interface State {
   valueInput: string;
@@ -29,14 +30,14 @@ class Searchbar extends Component<Props, State> {
     const { valueInput } = this.state;
 
     return (
-      <header className="searchbar">
+      <header className={style.searchbar}>
         <form className="form" onSubmit={this.onSubmit}>
-          <button type="submit" className="button">
+          <button type="submit" className={style.submit}>
             <span className="button-label">Search</span>
           </button>
 
           <input
-            className="input"
+            className={style.input}
             value={valueInput}
             type="text"
             autoComplete="off"
