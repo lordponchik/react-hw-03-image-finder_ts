@@ -10,8 +10,10 @@ interface Props {
 const ImageGallery = ({ images, isOpenModal }: Props) => {
   return (
     <ul className={style.gallery}>
-      {images.map((image: IImage) => {
-        return <ImageGalleryItem key={image.id} image={image} isOpenModal={isOpenModal} />;
+      {images.map((image: IImage, index) => {
+        return (
+          <ImageGalleryItem key={`${image.id}_${index}`} image={image} isOpenModal={isOpenModal} />
+        );
       })}
     </ul>
   );
