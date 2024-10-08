@@ -18,7 +18,7 @@ class ImageGallery extends Component<Props, State> {
     if (list) {
       return list.scrollHeight;
     }
-    return null; // Вернуть null, если список отсутствует
+    return null;
   }
 
   componentDidUpdate(prevProps: Props, prevState: State, snapshot: number | null) {
