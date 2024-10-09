@@ -56,6 +56,10 @@ class App extends Component<{}, State> {
         total !== 0 && total < perPage ? total : perPage
       );
 
+      if (images.hits.length === 0) {
+        alert('Nothing found');
+      }
+
       if (this.state.page === 1) {
         this.setState({ total: images.totalHits });
       }
@@ -69,6 +73,7 @@ class App extends Component<{}, State> {
         };
       });
     } catch (error) {
+      alert('Sorry, there was a request error. Please try again.');
     } finally {
       this.setState({ isLoading: false });
     }
