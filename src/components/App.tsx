@@ -14,6 +14,9 @@ interface State {
   images: IImage[];
   query: string;
   page: number;
+  perPage: number;
+  total: number;
+  showLoadMore: boolean;
   isLoading: boolean;
   isOpenModal: boolean;
   modalImageData: null | string;
@@ -24,6 +27,9 @@ class App extends Component<{}, State> {
     images: [],
     query: '',
     page: 1,
+    perPage: 51,
+    total: 0,
+    showLoadMore: false,
     isLoading: false,
     isOpenModal: false,
     modalImageData: '',
@@ -41,13 +47,25 @@ class App extends Component<{}, State> {
   sendingRequest = async () => {
     this.setState({ isLoading: true });
 
+    const { total, perPage } = this.state;
+
     try {
-      const images = await getImages(this.state.query, this.state.page);
+      const images = await getImages(
+        this.state.query,
+        this.state.page,
+        total !== 0 && total < perPage ? total : perPage
+      );
+
+      if (this.state.page === 1) {
+        this.setState({ total: images.totalHits });
+      }
 
       this.setState(prevState => {
         return {
-          images: [...prevState.images, ...images],
+          images: [...prevState.images, ...images.hits],
           isLoading: true,
+          total: prevState.total < prevState.perPage ? 0 : prevState.total - prevState.perPage,
+          showLoadMore: prevState.total > prevState.perPage,
         };
       });
     } catch (error) {
@@ -92,7 +110,7 @@ class App extends Component<{}, State> {
         <Searchbar onSubmit={this.qetQuery} />
         <ImageGallery images={this.state.images} isOpenModal={this.handleToggleModal} />
         {this.state.isLoading && <Loader />}
-        {this.state.images.length > 0 && <LoadMore nextPage={this.nextPage} />}
+        {this.state.showLoadMore && <LoadMore nextPage={this.nextPage} />}
 
         {this.state.isOpenModal && (
           <Modal closeModal={this.handleToggleModal}>
