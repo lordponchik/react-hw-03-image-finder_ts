@@ -14,20 +14,18 @@ class ImageGallery extends Component<Props, State> {
   listRef = React.createRef<HTMLUListElement>();
 
   getSnapshotBeforeUpdate(prevProps: Props, prevState: State): number | null {
-    const list = this.listRef.current;
-    if (list) {
-      return list.scrollHeight - list.scrollTop;
+    if (prevProps.images.length < this.props.images.length) {
+      const list = this.listRef.current;
+      if (list) {
+        return list.scrollHeight;
+      }
     }
     return null;
   }
 
   componentDidUpdate(prevProps: Props, prevState: State, snapshot: number | null) {
     if (snapshot !== null) {
-      const list = this.listRef.current;
-
-      if (list) {
-        scroll.scrollTo(snapshot);
-      }
+      scroll.scrollTo(snapshot);
     }
   }
 

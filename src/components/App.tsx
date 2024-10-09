@@ -102,6 +102,7 @@ class App extends Component<{}, State> {
     this.setState(({ isOpenModal }) => {
       return { isOpenModal: !isOpenModal, modalImageData: modalData };
     });
+    document.body.classList.toggle('no-scroll');
   };
 
   render() {
