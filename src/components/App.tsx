@@ -27,7 +27,7 @@ class App extends Component<{}, State> {
     images: [],
     query: '',
     page: 1,
-    perPage: 51,
+    perPage: 12,
     total: 0,
     showLoadMore: false,
     isLoading: false,
